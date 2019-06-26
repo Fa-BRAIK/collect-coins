@@ -55,16 +55,14 @@ export const draw = (contextes, loadedImages, player, coins) => {
 const drawMap = (contextes, loadedImages) => {
     for (let i = 0; i < mapArray.length; i++) {
         for (let j = 0; j < mapArray[i].length; j++) {
-            switch (mapArray[i][j]) {
-                case 1:
-                    contextes.mapCtx.drawImage(
-                        loadedImages.tile,
-                        0, 0, // first tile 
-                        tileWidth, tileWidth, // what to take from the loaded image
-                        tileWidth * j, tileWidth * i, // where to put it
-                        tileWidth, tileWidth // how much pixals we're gonna put it
-                    )
-                break
+            if (mapArray[i][j] !== 0) {
+                contextes.mapCtx.drawImage(
+                    loadedImages.tile,
+                    tileWidth * (mapArray[i][j] - 1), 0, // first tile 
+                    tileWidth, tileWidth, // what to take from the loaded image
+                    tileWidth * j, tileWidth * i, // where to put it
+                    tileWidth, tileWidth // how much pixals we're gonna put it
+                )
             }
         }
     }

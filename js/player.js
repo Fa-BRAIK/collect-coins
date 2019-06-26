@@ -45,7 +45,7 @@ class Player {
                 }
             break
             case 'bottom': 
-                if (mapArray[this.positionY + 1][this.positionX] !== 1) {
+                if (mapArray[this.positionY + 1][this.positionX] === 0) {
                     this.positionY += 1
                     this.currentPosition = 2
                     return true
