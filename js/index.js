@@ -13,7 +13,7 @@ let contextes = {
 
 loadImages(loadedImages => {
     let player = new Player(2, 8)
-    const coins = Coin.generateCoins(player, 5)
+    const coins = Coin.generateCoins(player, Math.floor(Math.random() * 6) + 5)
     draw(contextes, loadedImages, player, coins)
     
     for (let i = 0; i < coins.length; i++) 
