@@ -16,8 +16,10 @@ loadImages(loadedImages => {
     const coins = Coin.generateCoins(player, Math.floor(Math.random() * 6) + 5)
     draw(contextes, loadedImages, player, coins)
     
-    for (let i = 0; i < coins.length; i++) 
+    for (let i = 0; i < coins.length; i++) {
         coins[i].initAnimation(contextes.coinCtx, loadedImages)
+        coins[i].initCoinLifeTime(coins, contextes.coinCtx)
+    }
 
     window.addEventListener('keydown', e => {
         try {

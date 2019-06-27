@@ -4,7 +4,6 @@ import { Player } from './player.js'
 export { Coin }
 
 class Coin {
-    // static frames = 6
     /**
      * 
      * @param {Number} positionX 
@@ -15,10 +14,13 @@ class Coin {
         this.positionX = positionX
         this.positionY = positionY
         this.currentFrame = 0
-        this.level = Math.floor(Math.random() * 3) + 1
+        this.level = Math.floor(Math.random() * 3) + 1 
         this.frameRate = 10 * this.level
         this.points = (Math.floor(Math.random() * 100) + 100) * this.level
-        this.animation
+        this.coinAnimation
+        this.lifeTime = 5 - this.level
+        this.lifeTimeTimer 
+        this.coinOpacity = 1
     }
 
     /**
@@ -57,12 +59,13 @@ class Coin {
      * @param {Object} loadedImages 
      */
     initAnimation(coinCtx, loadedImages) {
-        this.animation = window.setInterval(() => {
+        this.coinAnimation = window.setInterval(() => {
             coinCtx.clearRect(
                 this.positionX * tileWidth, 
                 this.positionY * tileWidth,
                 tileWidth, tileWidth
             )
+            coinCtx.globalAlpha = this.coinOpacity;
             coinCtx.drawImage(
                 loadedImages.coins,
                 this.currentFrame * tileWidth, 0,
@@ -70,12 +73,41 @@ class Coin {
                 tileWidth * this.positionX, tileWidth * this.positionY,
                 tileWidth, tileWidth
             )
+            coinCtx.globalAlpha = 1;
             if (this.currentFrame === 5) this.currentFrame = 0
             else this.currentFrame++
         }, 1000 / this.frameRate)
     }
 
-    removeAnimation() { clearInterval(this.animation) }
+    removeAnimation() { clearInterval(this.coinAnimation) }
+
+    /**
+     * init the counter of the coin lifetime
+     * 
+     * @param {Array[Coin]} coins
+     * @param {CanvasRenderingContext2D} coinCtx
+     */
+    initCoinLifeTime(coins, coinCtx) {
+        this.lifeTimeTimer = window.setInterval(() => {
+            this.lifeTime--
+            this.coinOpacity = (this.lifeTime + 1) / (5 - this.level)
+            if (this.lifeTime === -1) {
+                this.removeAnimation()
+                for (let i = 0; i < coins.length; i++) {
+                    if (coins[i].positionX === this.positionX
+                        && coins[i].positionY === this.positionY) {
+                        coins.splice(i, 1)
+                    }
+                }
+                coinCtx.clearRect(
+                    this.positionX * tileWidth, 
+                    this.positionY * tileWidth, 
+                    tileWidth, tileWidth
+                )
+                clearInterval(this.lifeTimeTimer)
+            }
+        }, 3000)
+    }
 
     /**
      * 
@@ -85,7 +117,7 @@ class Coin {
         player.score += this.points
         console.log('player has consume this coin his score is added by ', this.points)
         console.log('his score is now :', player.score)
-
+        clearInterval(this.lifeTimeTimer)
         this.removeAnimation()
     }
 }
