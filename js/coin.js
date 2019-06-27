@@ -12,8 +12,8 @@ class Coin {
     constructor(positionX, positionY) {
         this.positionX = positionX
         this.positionY = positionY
-        this.currentFrame = 0
-        this.level = Math.floor(Math.random() * 3) + 1 
+        this.currentFrame = Math.floor(Math.random() * coinFrames) 
+        this.level = Math.floor(Math.random() * 3) + 1
         this.frameRate = 10 * this.level
         this.points = (Math.floor(Math.random() * 100) + 100) * this.level
         this.coinAnimation
