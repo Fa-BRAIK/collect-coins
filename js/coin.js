@@ -14,6 +14,7 @@ class Coin {
         this.positionY = positionY
         this.currentFrame = Math.floor(Math.random() * coinFrames) 
         this.level = Math.floor(Math.random() * 3) + 1
+        if (this.level === 3 && Math.random() > 0.5) this.level++ 
         this.frameRate = 10 * this.level
         this.points = (Math.floor(Math.random() * 100) + 100) * this.level
         this.coinAnimation
@@ -66,7 +67,7 @@ class Coin {
             )
             coinCtx.globalAlpha = this.coinOpacity;
             coinCtx.drawImage(
-                loadedImages.coins,
+                loadedImages.coins[this.level - 1],
                 this.currentFrame * tileWidth, 0,
                 tileWidth, tileWidth,
                 tileWidth * this.positionX, tileWidth * this.positionY,
@@ -114,8 +115,6 @@ class Coin {
      */
     consumeCoin(player) {
         player.score += this.points
-        console.log('player has consume this coin his score is added by ', this.points)
-        console.log('his score is now :', player.score)
         clearInterval(this.lifeTimeTimer)
         this.removeAnimation()
     }
