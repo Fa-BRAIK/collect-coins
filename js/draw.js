@@ -49,7 +49,7 @@ export const draw = (contextes, loadedImages, player, coins) => {
     drawMap(contextes, loadedImages)
     drawCoins(contextes, loadedImages, coins)
     drawPlayer(contextes, loadedImages, player)
-    drawScoreboard(contextes.mapCtx, player, loadedImages, 0)
+    drawScoreboard(contextes.mapCtx, player, loadedImages)
 }
 
 /**
@@ -111,8 +111,9 @@ const drawCoins = (contextes, loadedImages, coins) => {
  * @param {Player} player 
  * @param {Object} loadedImages
  * @param {Number} totalCoinsToBeGenerated 
+ * @param {Number} point
  */
-export const drawScoreboard = (ctx, player, loadedImages, totalCoinsToBeGenerated) => {
+export const drawScoreboard = (ctx, player, loadedImages, totalCoinsToBeGenerated = 0, points = 0) => {
     ctx.clearRect(0, 576, 768, 200)
     for (let i = 0; i < scoreBoardArray.length; i++) {
         for (let j = 0; j < scoreBoardArray[i].length; j++) {
@@ -128,4 +129,17 @@ export const drawScoreboard = (ctx, player, loadedImages, totalCoinsToBeGenerate
         }
     }
     ctx.fillText('P l a y e r  S c o r e    :   ' + player.score, 560, 676)
+
+    if (points > 0) {
+        ctx.clearRect(660, 680, 150, 50)
+
+        ctx.save()
+        ctx.textAlign = 'left'
+        ctx.fillStyle = '#0b0'
+        ctx.font = '20px Roboto thin'
+        ctx.fillText('+' + points, 700, 706)
+        ctx.restore()
+
+        setTimeout(() => ctx.clearRect(620, 680, 150, 50), 500)
+    }   
 }

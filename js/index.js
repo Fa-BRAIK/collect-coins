@@ -14,7 +14,7 @@ let contextes = {
 //setting up text styling for the canvas
 contextes.mapCtx.textAlign = 'center'
 contextes.mapCtx.fillStyle = '#fff'
-contextes.mapCtx.font = "30px Roboto thin";
+contextes.mapCtx.font = '30px Roboto thin';
 
 loadImages(loadedImages => {
     let totalCoinsToBeGenerated = Math.floor(Math.random() * 11) + 20
@@ -64,12 +64,13 @@ loadImages(loadedImages => {
                             player.positionY * tileWidth, 
                             tileWidth, tileWidth
                         )
-
+                        
                         drawScoreboard(
                             contextes.mapCtx, 
                             player, 
                             loadedImages, 
-                            totalCoinsToBeGenerated
+                            totalCoinsToBeGenerated,
+                            coin.points
                         )
                     }
 
