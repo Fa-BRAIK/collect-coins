@@ -12,8 +12,10 @@ let contextes = {
 }
 
 loadImages(loadedImages => {
+    let totalCoinsToBeGenerated = Math.floor(Math.random() * 11) + 20
     let player = new Player(2, 8)
-    const coins = Coin.generateCoins(player, Math.floor(Math.random() * 6) + 5)
+    let coins = Coin.generateCoins(player, Math.floor(Math.random() * 6) + 5)
+    totalCoinsToBeGenerated -= coins.length
     draw(contextes, loadedImages, player, coins)
     
     for (let i = 0; i < coins.length; i++) {
@@ -72,4 +74,29 @@ loadImages(loadedImages => {
             }
         } catch (e) {console.log(e)}
     })
+
+    let coinsCounter = window.setInterval(() => {
+        if (coins.length === 0) {
+            if (totalCoinsToBeGenerated > 0) {
+                coins = regerateCoins(player, loadedImages)
+                totalCoinsToBeGenerated -= coins.length
+            } else clearInterval(coinsCounter)
+        }
+    }, 1000)
 })
+
+/**
+ * 
+ * @param {Player} player 
+ * @returns {Array[Coin]}
+ */
+const regerateCoins = (player, loadedImages) => {
+    let coins =  Coin.generateCoins(player, Math.floor(Math.random() * 6) + 5)
+
+    for (let i = 0; i < coins.length; i++) {
+        coins[i].initAnimation(contextes.coinCtx, loadedImages)
+        coins[i].initCoinLifeTime(coins, contextes.coinCtx)
+    }
+
+    return coins
+}

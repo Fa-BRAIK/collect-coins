@@ -8,7 +8,6 @@ class Coin {
      * 
      * @param {Number} positionX 
      * @param {Number} positionY 
-     * @param {Object} ctx
      */
     constructor(positionX, positionY) {
         this.positionX = positionX
@@ -74,7 +73,7 @@ class Coin {
                 tileWidth, tileWidth
             )
             coinCtx.globalAlpha = 1;
-            if (this.currentFrame === 5) this.currentFrame = 0
+            if (this.currentFrame === coinFrames) this.currentFrame = 0
             else this.currentFrame++
         }, 1000 / this.frameRate)
     }
