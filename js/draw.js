@@ -123,5 +123,5 @@ export const drawScoreboard = (ctx, player, loadedImages, totalCoinsToBeGenerate
             }
         }
     }
-    ctx.fillText('P l a y e r  S c o r e    :   ' + player.score, 384, 676, )
+    ctx.fillText('P l a y e r  S c o r e    :   ' + player.score, 560, 676)
 }
