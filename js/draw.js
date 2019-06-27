@@ -1,4 +1,4 @@
-import { mapArray, tileWidth } from './data.js'
+import { mapArray, scoreBoardArray, tileWidth, height } from './data.js'
 import { Player } from './player.js'
 import { Coin } from './coin.js'
 
@@ -45,6 +45,7 @@ export const draw = (contextes, loadedImages, player, coins) => {
     drawMap(contextes, loadedImages)
     drawCoins(contextes, loadedImages, coins)
     drawPlayer(contextes, loadedImages, player)
+    drawScoreboard(contextes.mapCtx, player, loadedImages, 0)
 }
 
 /**
@@ -98,4 +99,29 @@ const drawCoins = (contextes, loadedImages, coins) => {
         tileWidth, tileWidth
     )
     }
+}
+
+/**
+ * 
+ * @param {CanvasRenderingContext2D} ctx 
+ * @param {Player} player 
+ * @param {Object} loadedImages
+ * @param {Number} totalCoinsToBeGenerated 
+ */
+export const drawScoreboard = (ctx, player, loadedImages, totalCoinsToBeGenerated) => {
+    ctx.clearRect(0, 576, 768, 200)
+    for (let i = 0; i < scoreBoardArray.length; i++) {
+        for (let j = 0; j < scoreBoardArray[i].length; j++) {
+            if (scoreBoardArray[i][j] !== 0) {
+                ctx.drawImage(
+                    loadedImages.tile,
+                    tileWidth * (scoreBoardArray[i][j] - 1), 0, // first tile 
+                    tileWidth, tileWidth, // what to take from the loaded image
+                    tileWidth * j, tileWidth * i + height, // where to put it
+                    tileWidth, tileWidth // how much pixals we're gonna put it
+                )
+            }
+        }
+    }
+    ctx.fillText('P l a y e r  S c o r e    :   ' + player.score, 384, 676, )
 }

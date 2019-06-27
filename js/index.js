@@ -1,6 +1,6 @@
 import { Player } from './player.js'
 import { Coin } from './coin.js'
-import { loadImages, draw, drawPlayer } from './draw.js'
+import { loadImages, draw, drawPlayer, drawScoreboard } from './draw.js'
 import { tileWidth } from './data.js'
 
 let mouvement = false
@@ -10,6 +10,11 @@ let contextes = {
     playerCtx: document.querySelector('#main_canvas').getContext('2d'),
     coinCtx: document.querySelector('#main_canvas').getContext('2d')
 }
+
+//setting up text styling for the canvas
+contextes.mapCtx.textAlign = 'center'
+contextes.mapCtx.fillStyle = '#fff'
+contextes.mapCtx.font = "30px Roboto thin";
 
 loadImages(loadedImages => {
     let totalCoinsToBeGenerated = Math.floor(Math.random() * 11) + 20
@@ -58,6 +63,13 @@ loadImages(loadedImages => {
                             player.positionX * tileWidth, 
                             player.positionY * tileWidth, 
                             tileWidth, tileWidth
+                        )
+
+                        drawScoreboard(
+                            contextes.mapCtx, 
+                            player, 
+                            loadedImages, 
+                            totalCoinsToBeGenerated
                         )
                     }
 
