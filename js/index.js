@@ -64,7 +64,7 @@ loadImages(loadedImages => {
                             player.positionY * tileWidth, 
                             tileWidth, tileWidth
                         )
-                        
+
                         drawScoreboard(
                             contextes.mapCtx, 
                             player, 
@@ -93,7 +93,15 @@ loadImages(loadedImages => {
             if (totalCoinsToBeGenerated > 0) {
                 coins = regerateCoins(player, loadedImages)
                 totalCoinsToBeGenerated -= coins.length
-            } else clearInterval(coinsCounter)
+            } else {
+                clearInterval(coinsCounter)
+                contextes.mapCtx.clearRect(100, 620, 200, 100)
+                contextes.mapCtx.save()
+                contextes.mapCtx.font = '16px Roboto thin'
+                contextes.mapCtx.fillStyle = '#b00'
+                contextes.mapCtx.fillText('Game Over', 200, 672)
+                contextes.mapCtx.restore()
+            } 
         }
     }, 1000)
 })

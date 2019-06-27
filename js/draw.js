@@ -113,7 +113,7 @@ const drawCoins = (contextes, loadedImages, coins) => {
  * @param {Number} totalCoinsToBeGenerated 
  * @param {Number} point
  */
-export const drawScoreboard = (ctx, player, loadedImages, totalCoinsToBeGenerated = 0, points = 0) => {
+export const drawScoreboard = (ctx, player, loadedImages, totalCoinsToBeGenerated = -1, points = 0) => {
     ctx.clearRect(0, 576, 768, 200)
     for (let i = 0; i < scoreBoardArray.length; i++) {
         for (let j = 0; j < scoreBoardArray[i].length; j++) {
@@ -141,5 +141,12 @@ export const drawScoreboard = (ctx, player, loadedImages, totalCoinsToBeGenerate
         ctx.restore()
 
         setTimeout(() => ctx.clearRect(620, 680, 150, 50), 500)
-    }   
+    }
+
+    ctx.clearRect(100, 620, 200, 100)
+    ctx.save()
+    ctx.font = '16px Roboto thin'
+    ctx.fillStyle = '#aa0'
+    ctx.fillText('Another wave is comming', 200, 672)
+    ctx.restore()
 }
